@@ -16,7 +16,7 @@ import User from './user.model';
 export class AuthService {
   user = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   signup(email: string, password: string) {
     return this.http
@@ -81,6 +81,11 @@ export class AuthService {
       return throwError(() => errorMessage);
     }
   }
+
+  logout() {
+    this.user.next(null);
+  }
+
 }
 
 export type FirebaseAuthData = {

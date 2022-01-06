@@ -10,7 +10,7 @@ import { AuthService, FirebaseAuthData } from './auth.service';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit {
-  inLogin = false;
+  inLogin = true;
   isLoading = false;
   error: string = null;
 

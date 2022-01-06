@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs';
 import Recipe from '../../recipes/recipe.model';
 import { RecipesService } from '../../recipes/recipes.service';
 
@@ -17,6 +17,11 @@ export default class DataStorageService {
     const recipes = this.recipeService.recipes;
     this.http
       .put<Recipe[]>(`${this.REST_API_URL}/recipes.json`, recipes)
+      .pipe(
+        catchError((error) => {
+          return [];
+        })
+      )
       .subscribe((data) => {
         console.log(data);
       });
@@ -24,6 +29,9 @@ export default class DataStorageService {
 
   fetchRecipes() {
     return this.http.get<Recipe[]>(`${this.REST_API_URL}/recipes.json`).pipe(
+      catchError((error) => {
+        return [];
+      }),
       map((recipes) => {
         return recipes.map(
           (r) => new Recipe(r.name, r.description, r.imagePath, r.ingredients)

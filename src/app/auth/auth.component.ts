@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService, FirebaseAuthData } from './auth.service';
 
@@ -13,13 +14,13 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error: string = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
     const { email, password } = form.value;
-    this.error = null
+    this.error = null;
 
     let authObs: Observable<FirebaseAuthData>;
 
@@ -31,14 +32,15 @@ export class AuthComponent implements OnInit {
 
     this.isLoading = true;
     authObs.subscribe({
-      next: authData => {
+      next: (authData) => {
         console.log(authData);
-        this.isLoading = false
+        this.isLoading = false;
+        this.router.navigate(['/recipes']);
       },
-      error: errorMessage => {
+      error: (errorMessage) => {
         this.error = errorMessage;
-        this.isLoading = false
-      }
+        this.isLoading = false;
+      },
     });
   }
 }

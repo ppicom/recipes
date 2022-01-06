@@ -6,6 +6,7 @@ import {
   exhaustMap,
   map,
   Observable,
+  tap,
   throwError,
 } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -27,7 +28,10 @@ export class AuthService {
           returnSecureToken: true,
         }
       )
-      .pipe(catchError(this.handleAuthError));
+      .pipe(
+        catchError(this.handleAuthError),
+        tap(this.handleAuthentication.bind(this))
+      );
   }
 
   login(email: string, password: string) {
@@ -40,7 +44,21 @@ export class AuthService {
           returnSecureToken: true,
         }
       )
-      .pipe(catchError(this.handleAuthError));
+      .pipe(
+        catchError(this.handleAuthError),
+        tap(this.handleAuthentication.bind(this))
+      );
+  }
+
+  private handleAuthentication({
+    email,
+    expiresIn,
+    idToken,
+    localId,
+  }: FirebaseAuthData) {
+    const expiration = new Date(new Date().getTime() + +expiresIn * 1000);
+    const user = new User(email, localId, idToken, expiration);
+    this.user.next(user);
   }
 
   private handleAuthError(errorRes: HttpErrorResponse) {

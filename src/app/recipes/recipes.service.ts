@@ -6,20 +6,7 @@ import Recipe from './recipe.model';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesService {
-  private _recipes: Recipe[] = [
-    new Recipe(
-      'Porterhouse steak',
-      'This is simply a steak',
-      'https://st.depositphotos.com/1020804/1448/i/950/depositphotos_14480443-stock-photo-beef-steak.jpg',
-      [new Ingredient('Meat', 1), new Ingredient('Potatoes', 3)]
-    ),
-    new Recipe(
-      'Spaghettis',
-      'Incredible and unbelievable',
-      'https://grecipes.s3.amazonaws.com/recipe_picture/1618081/uploads_20200204T2329Z_ace8a4529b49f9a2c4129e343e4fac2b_1576681061599.jpg',
-      [new Ingredient('Pasta', 100), new Ingredient('Tomato sauce', 250)]
-    ),
-  ];
+  private _recipes: Recipe[] = [];
 
   recipeSelected = new EventEmitter<Recipe>();
   recipesChanged = new Subject<Recipe[]>();

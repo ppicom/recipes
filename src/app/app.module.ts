@@ -10,16 +10,13 @@ import HeaderComponent from './header/header.component';
 import { RecipesModule } from './recipes/recipes.module';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
-import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent,
     DropdownDirective,
     AuthComponent,
     SpinnerComponent
@@ -30,7 +27,8 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RecipesModule
+    RecipesModule,
+    ShoppingListModule
   ],
   providers: [
     {
